@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مجابيس</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Marhey:wght@700&family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Aboreto&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome (for icons) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+    <!-- Normalize CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+    
+
+<style>
+    /* ================================================= */
+    /* ===== 1. CSS For Restaurant Sections (مجابيس) ===== */
+    /* ================================================= */
+    
+    /* ----- 1.1 The Foundation: Colors, Fonts, and Base Styles ----- */
+    :root {
+        --bg-cream: #FBF6EF;
+        --bg-soft-beige: #F5EFE1;
+        --text-brown: #4A3731;
+        --accent-gold: #D4AF37;
+        --accent-red: #ff1e00;
+        --shadow-color: rgba(255, 60, 0, 0.15);
+        --font-headings: 'Aref Ruqaa', 'Cairo', sans-serif;
+        --font-body: 'Cairo', sans-serif;
+        
+        /* Variables from Carousel CSS */
+        --border-color: #00000025;
+        --w-image: 500px;
+        --calculate: calc(3 / 2);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    html { scroll-behavior: smooth; }
+
+    body {
+        font-family: 'Poppins', var(--font-body);
+        background-color: var(--bg-cream);
+        color: var(--text-brown);
+        overflow-x: hidden;
+        margin: 0;
+        font-size: 16px;
+    }
+    
+    .section-container { padding: 100px 5%; max-width: 1200px; margin: 0 auto; }
+    .section-title { font-family: var(--font-headings); font-size: clamp(2.5rem, 5vw, 3.5rem); color: var(--text-brown); text-align: center; margin-bottom: 60px; }
+    .menu-section, .services-section, .about-section { background-color: var(--bg-soft-beige); position: relative; overflow: hidden; }
+    
+    .menu-section::before, .services-section::before, .about-section::before { 
+        content: ''; 
+        position: absolute; 
+        top: 0; 
+        left: 0; 
+        width: 100%; 
+        height: 100%; 
+        background-image: url('WhatsApp Image 2025-08-28 at 1.51.56 PM.jpeg'); 
+        opacity: 0.04; 
+        z-index: 0;
+        background-size: 500px; 
+        background-repeat: repeat; 
+    }
+    
+    /* ===== هنا التعديل الأول: زيادة وضوح الكلمة ===== */
+    .giant-text-bg {
+        position: absolute;
+        top: 50%;
+        right: -25%; 
+        transform: translateY(-50%) rotate(10deg); 
+        font-family: var(--font-headings);
+        font-size: clamp(15rem, 30vw, 25rem);
+        font-weight: 700;
+        color: rgba(74, 55, 49, 0.08); /* تمت زيادة الشفافية من 0.05 إلى 0.08 */
+        z-index: 1;
+        pointer-events: none;
+        white-space: nowrap;
+        line-height: 1;
+        user-select: none;
+    }
+    #about .giant-text-bg {
+        right: auto;
+        left: -25%; 
+        transform: translateY(-50%) rotate(-10deg);
+    }
+
+    .menu-section .section-title, .menu-section .menu-grid, .services-grid, .about-section .two-column-layout { position: relative; z-index: 2; }
+    .menu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; perspective: 1000px; }
+    /* ===== تعديل على كارت المنيو ليحتوي الفانوس ===== */
+.menu-card { 
+    background: white; 
+    border-radius: 20px; 
+    /* overflow: hidden; -- تم إيقاف هذه الخاصية للسماح للفانوس بالظهور خارج حدود الكارت */
+    box-shadow: 0 10px 30px var(--shadow-color); 
+    transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.5s ease; 
+    cursor: pointer;
+    position: relative; /* مهم جداً لتحديد موقع الفانوس */
+    z-index: 1;
+}
+.menu-card:hover { transform: scale(1.05); box-shadow: 0 20px 40px rgba(74, 55, 49, 0.25); }
+
+.card-img-container { 
+    height: 250px; 
+    overflow: hidden; 
+    border-radius: 20px 20px 0 0; /* الحفاظ على الحواف الدائرية للصورة */
+}
+.card-img-container img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
+.menu-card:hover .card-img-container img { transform: scale(1.1); }
+
+.card-content { padding: 25px; text-align: center; } /* تم توسيط النص */
+.card-content h3 { font-family: var(--font-headings); font-size: 1.8rem; margin-bottom: 10px; }
+
+
+/* ===== إضافة جديدة: تنسيق الفانوس ثلاثي الأبعاد ===== */
+.spline-lantern {
+    position: absolute;
+    top: -60px; /* يرفع الفانوس للأعلى ليبدو معلقاً */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 220px;
+    height: 220px;
+    z-index: 5; /* يجعله فوق الصورة */
+    pointer-events: none; /* يسمح بالضغط على الكارت نفسه */
+    transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.menu-card:hover .spline-lantern {
+    transform: translateX(-50%) translateY(-10px) scale(1.1) rotate(5deg); /* حركة طفيفة عند مرور الماوس */
+}
+    .card-content p { font-size: 1rem; line-height: 1.6; }
+    .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; }
+    .service-card { background: #FFFFFF; padding: 40px 20px; border-radius: 20px; text-align: center; text-decoration: none; color: var(--text-brown); box-shadow: 0 8px 25px rgba(93, 64, 55, 0.08); transition: all 0.4s ease; display: flex; flex-direction: column; }
+    .service-card:hover { transform: translateY(-12px); box-shadow: 0 20px 40px rgba(93, 64, 55, 0.12); }
+    .service-card i { font-size: 3rem; margin-bottom: 20px; display: inline-block; transition: transform 0.3s ease; }
+    .service-card i::before { background: linear-gradient(45deg, var(--accent-gold), var(--accent-red)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; text-fill-color: transparent; }
+    .service-card:hover i { transform: scale(1.1); }
+    .service-card h3 { font-family: var(--font-headings); font-size: 1.5rem; margin-bottom: 10px; }
+    .service-card p { font-size: 0.9rem; line-height: 1.6; color: rgba(74, 55, 49, 0.8); margin-top: auto; }
+    .service-card.primary { background: var(--text-brown); color: white; }
+    .service-card.primary:hover { background: var(--accent-red); }
+    .service-card.primary i::before { background: none; -webkit-text-fill-color: var(--accent-gold); text-fill-color: var(--accent-gold); }
+    .service-card.primary p { color: rgba(251, 246, 239, 0.8); }
+    .two-column-layout { display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 60px; }
+    
+    /* ===== هنا التعديل الثاني: تأثير الزجاج المصنفر ===== */
+    .about-section .text-content {
+        text-align: right;
+        background: rgba(251, 246, 239, 0.65); /* خلفية شبه شفافة */
+        backdrop-filter: blur(10px); /* التأثير الضبابي (الزجاج المصنفر) */
+        -webkit-backdrop-filter: blur(10px); /* لدعم متصفح سفاري */
+        border-radius: 20px; /* حواف دائرية تتناسق مع التصميم */
+        padding: 40px; /* مساحة داخلية للنص */
+        border: 1px solid rgba(74, 55, 49, 0.1); /* حد خفيف للتحديد */
+        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1); /* ظل ناعم */
+    }
+
+    .image-content img { width: 100%; border-radius: 20px; box-shadow: 0 10px 30px var(--shadow-color); }
+    .about-section .text-content .lead-paragraph { font-size: 1.1rem; line-height: 1.7; margin-bottom: 40px; }
+    .timeline { position: relative; padding-right: 30px; margin-bottom: 40px; border-right: 3px solid var(--accent-gold); }
+    .timeline-item { position: relative; margin-bottom: 30px; }
+    .timeline-item:last-child { margin-bottom: 0; }
+    .timeline-item::before { content: ''; position: absolute; right: -17px; top: 5px; width: 12px; height: 12px; background-color: var(--accent-red); border: 3px solid var(--bg-cream); border-radius: 50%; z-index: 1; }
+    .timeline-content h4 { font-family: var(--font-headings); font-size: 1.3rem; margin-bottom: 5px; color: var(--text-brown); }
+    .timeline-content p { font-size: 0.95rem; line-height: 1.6; }
+    .menu-loader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.85); display: flex; align-items: center; justify-content: center; z-index: 9999; opacity: 0; pointer-events: none; transition: opacity 0.4s ease; }
+    .menu-loader.visible { opacity: 1; pointer-events: auto; }
+    .loader-content h2 { font-family: var(--font-headings); font-size: clamp(4rem, 10vw, 8rem); color: white; text-shadow: 0 0 30px rgba(255, 255, 255, 0.5); animation: fadeInScale 1s ease forwards; }
+    @keyframes fadeInScale { from { opacity: 0; transform: scale(0.8); } to { opacity: 1; transform: scale(1); } }
+
+    /* ================================================= */
+    /* ===== 2. CSS For Header & Carousel (UPDATED) ===== */
+    /* ================================================= */
+    
+    header{ display: grid; grid-template-columns: auto 1fr; height: 80px; align-items: center; position: relative; z-index: 1000; border-bottom: 1px solid var(--border-color); background: #ffffff99; backdrop-filter: blur(10px); }
+    header .logo { padding: 0 30px; }
+    .logo-text { font-family: 'Aref Ruqaa', serif; font-size: 2.5rem; font-weight: 700; color: var(--accent-red); text-decoration: none; }
+    .main-nav { justify-self: end; }
+    .main-nav ul{ height: 100%; display: flex; align-items: center; gap: 50px; padding-left: 50px; list-style: none; }
+    .main-nav a{ font-family: 'Cairo', sans-serif; color: var(--text-brown); font-weight: 600; font-size: 1.1rem; text-decoration: none; position: relative; padding-bottom: 8px; transition: color 0.3s ease; }
+    .main-nav a::after { content: ''; position: absolute; width: 100%; height: 2px; background-color: var(--accent-red); bottom: 0; right: 0; transform: scaleX(0); transform-origin: right; transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1); }
+    .main-nav a:hover::after { transform: scaleX(1); }
+    .main-nav a:hover { color: var(--accent-red); }
+    .carousel{ width: 100%; height: 100vh; overflow: hidden; position: relative; direction: ltr; margin-top: -80px;}
+    .carousel .list{ height: 100%; position: relative; }
+    .carousel .list::before{ position: absolute; width: var(--w-image); height: 100%; content: ''; top: 0; left: calc(100% - calc(var(--w-image) * var(--calculate))); border-left: 1px solid var(--border-color); border-right: 1px solid var(--border-color); z-index: 10; pointer-events: none; }
+    .carousel .list::after{ position: absolute; top: 50px; left: 50px; content: ''; background-color: var(--text-brown); width: 400px; height: 300px; z-index: 10; pointer-events: none; border-radius: 20px 50px 110px 230px; filter: blur(150px); opacity: .5; }
+    .carousel .list .item{ position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+    .carousel .list .item .image{ width: var(--w-image); height: 100%; position: absolute; top: 0; left: calc(100% - calc(var(--w-image) * var(--calculate))); padding: 20px; display: flex; flex-direction: column; justify-content: end; align-items: center; font-weight: 500; }
+    .carousel .list .item .image img{ width: 90%; margin-bottom: 20px;  }
+    .carousel .list .item .image figcaption{ font-family: 'Aboreto', 'Cairo', sans-serif; font-weight: bold; font-size: 1.3em; text-align: right; margin-bottom: 30px; width: 70%; }
+    .carousel .list .item .main-content{ height: 100%; display: grid; grid-template-columns: calc(100% - calc(var(--w-image) * var(--calculate))); position: relative; overflow: hidden; }
+    .carousel .list .item .main-content::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: url('WhatsApp Image 2025-08-28 at 1.51.56 PM.jpeg'); background-size: 400px; background-repeat: repeat; opacity: 0.05; z-index: 1; }
+    .carousel .list .item .main-content .content{ padding: 50px; direction: rtl; position: relative; z-index: 2; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; height: 100%; }
+    .carousel .list .item .main-content .content h2, .item .main-content .content h2, .item:nth-child(odd) .main-content .content h2, .item:nth-child(even) .main-content .content h2 { font-family: var(--font-headings); font-size: clamp(4rem, 8vw, 7rem); color: var(--accent-red); line-height: 1.2; margin-bottom: 40px; text-shadow: none !important; }    
+    .carousel .list .item .main-content .content p { display: none; }
+    .carousel .content a.order-link { text-decoration: none; }
+    .carousel .content button.order-now { background-color: var(--accent-red); color: #fff; padding: 15px 45px; font-family: 'Cairo', sans-serif; font-size: 1.2rem; font-weight: 700; border-radius: 50px; border: 2px solid transparent; cursor: pointer; transition: all 0.3s ease-in-out; box-shadow: 0 5px 15px rgba(185, 92, 80, 0.4); }
+    .carousel .content button.order-now:hover { background-color: #fff; color: var(--accent-red); border-color: var(--accent-red); transform: translateY(-5px); box-shadow: 0 10px 20px rgba(185, 92, 80, 0.5); }
+    .arrows{ position: absolute; bottom: 5px; width: calc(100% - calc(var(--w-image) * var(--calculate))); display: grid; grid-template-columns: repeat(2, 60px); grid-template-rows: 60px; justify-content: end; gap:190px; z-index: 10; }
+    .arrows button{ background-color: rgba(255, 255, 255, 0.7); border: 1px solid var(--border-color); color: var(--text-brown); font-size: 0; box-shadow: 0 10px 40px rgba(74, 55, 49, 0.1); cursor: pointer; transition: all 0.4s ease; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+    .arrows button:hover{ background-color: var(--text-brown); color: #fff; transform: scale(1.1); }
+    .arrows button::before { font-family: "Font Awesome 6 Free"; font-weight: 900; font-size: 1.5rem; }
+    .arrows button#prev::before { content: '\f060'; }
+    .arrows button#next::before { content: '\f061'; }
+    .carousel .list .item{ display: none; }
+    .carousel .list .item.active, .carousel .list .item.other_1, .carousel .list .item.other_2{ display: block; }
+    .carousel .list .item.active{ z-index: 2; }
+    .carousel .list .item.other_1, .carousel .list .item.other_2{ pointer-events: none; }
+    .carousel .list .item.active .main-content{ animation: showContent 1s ease-in-out 1 forwards; }
+    @keyframes showContent{ from{ clip-path: circle(0% at 70% 50%); } to{ clip-path: circle(100% at 70% 50%); } }
+    .next .item.other_1{ z-index: 1; }
+    .next .item .image img, .next .item .image figcaption{ animation: effectNext .5s ease-in-out 1 forwards; }
+    @keyframes effectNext{ from{ transform: translateX(calc(var(--transform-from))); } to{ transform: translateX(calc(var(--transform-from) - var(--w-image))); } }
+    .next .item.active .image{ --transform-from: var(--w-image); }
+    .next .item.other_1 .image{ z-index: 3; --transform-from: 0px; overflow: hidden; }
+    .next .item.other_2 .image{ z-index: 3; --transform-from: calc(var(--w-image) * 2); }
+    .prev .list .item .image img, .prev .list .item .image figcaption{ animation: effectPrev 0.5s ease-in-out 1 forwards; }
+    @keyframes effectPrev{ from{ transform: translateX(calc(var(--transform-from))); } to{ transform: translateX(calc(var(--transform-from) + var(--w-image))); } }
+    .prev .list .item.active .image{ --transform-from: calc(var(--w-image) * -1); overflow: hidden; }
+    .prev .list .item.other_1 .image{ --transform-from: 0px; z-index: 3; }
+    .prev .list .item.other_2 .image{ z-index: 3; --transform-from: var(--w-image); }
+    .prev .list .item.other_2 .main-content{ opacity: 0; }
+    .item:nth-child(odd) .main-content { background-color: #1e1f33; color: #ffffff; }
+    .item:nth-child(even) .main-content { background-color: #ffdacf; color: #4a2e1d; }
+    .item .image { height: 250px; }
+    .item .image img { width: 100%; height: 100%; object-fit: cover; }
+    .item:nth-child(odd) .main-content .content h2, .item:nth-child(odd) .main-content .content p { text-shadow: 0 0 8px #1e1f33, 0 0 12px #1e1f33, 0 0 15px #1e1f33; }
+    .item:nth-child(even) .main-content .content h2, .item:nth-child(even) .main-content .content p { text-shadow: 0 0 8px #ffdacf, 0 0 12px #ffdacf, 0 0 15px #ffdacf; }
+    
+    /* ======================================================= */
+    /* ===== 3. Responsiveness & Navbar Fix (الأهم هنا) ===== */
+    /* ======================================================= */
+    
+    .nav-toggle { display: none; background: none; border: none; font-size: 2rem; color: var(--text-brown); cursor: pointer; z-index: 1001; }
+    @media (max-width: 1023px) {
+        :root{ --calculate: 1; --w-image: 400px; }
+        .carousel .list .item .main-content .content h2 { font-family: var(--font-headings); font-size: clamp(4rem, 8vw, 7rem); color: var(--accent-red); line-height: 1.2; margin-bottom: 40px; text-shadow: none !important; }
+    }
+    @media (max-width: 768px) {
+        header { display: flex; justify-content: space-between; align-items: center; padding: 0 20px; }
+        .nav-toggle { display: block; }
+        .main-nav { position: static; }
+        .main-nav ul { display: none; position: absolute; top: 55px; left: 20px; width: 200px; padding: 10px 0; background: var(--bg-cream); border-radius: 15px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); flex-direction: column; align-items: flex-start; gap: 0; z-index: 1000; height: 150px; }
+        .main-nav ul.show { display: flex; }
+        .main-nav ul li { width: 100%; }
+        .main-nav ul li a { display: block; padding: 12px 20px; width: 100%; }
+        .main-nav a::after { display: none; }
+        .two-column-layout { grid-template-columns: 1fr; }
+        .text-content { text-align: center; order: 2; }
+        .about-section .text-content { padding: 30px; /* تقليل المساحة الداخلية في الموبايل */ }
+        .image-content { order: 1; }
+        .carousel .list .item .image{ width: 100%; left: 0; justify-content: center; }
+        .carousel .list .item .image figcaption{ color: #fff; width: 100%; text-align: center; }
+        .carousel .list .item .main-content .content{ display: none; }
+        .arrows{ left: 50%; transform: translateX(-50%); justify-content: center; width: auto; }
+    }
+</style>
+<!-- ===== إضافة جديدة: مكتبة Spline Viewer ===== -->
+<script type="module" src="https://unpkg.com/@splinetool/viewer@1.0.94/build/spline-viewer.js"></script>
+</head>
+<body>
+    
+    <header>
+        <div class="logo">
+            <a href="#" class="logo-text">مجابيس</a>
+        </div>
+        <nav class="main-nav">
+            <button class="nav-toggle" aria-label="القائمة">
+                <i class="fa fa-bars"></i>
+            </button>
+            <ul>
+                <li><a href="#menu">قوائمنا</a></li>
+                <li><a href="#services">خدماتنا</a></li>
+                <li><a href="#about">قصتنا</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Section 1: The Carousel (Hero Section) -->
+        <section class="carousel next">
+            <div class="list">
+                <!-- الكارت الأول --><article class="item"><div class="main-content"><div class="content"><h2>مطعم مجابيس </h2><a href="https://www.orderfast.com/en/machaabees" target="_blank" class="order-link"><button class="order-now">اطلب الآن</button></a></div></div><figure class="image"><img src="images/majboos-dajaj.jpg" alt="مجبوس دجاج"><figcaption style="color: #ff1e00;" >مجبوس دجاج</figcaption></figure></article>
+                <!-- الكارت الثاني --><article class="item"><div class="main-content"><div class="content"><h2>مطعم مجابيس </h2><a href="https://www.orderfast.com/en/machaabees" target="_blank" class="order-link"><button class="order-now">اطلب الآن</button></a></div></div><figure class="image"><img src="images/murabyan.jpg" alt="مربين"><figcaption style="color: #ff1e00;">مربين</figcaption></figure></article>
+                <!-- الكارت الثالث --><article class="item"><div class="main-content"><div class="content"><h2>مطعم مجابيس </h2><a href="https://www.orderfast.com/en/machaabees" target="_blank" class="order-link"><button class="order-now">اطلب الآن</button></a></div></div><figure class="image"><img src="images/biryani-dajaj.jpg" alt="برياني دجاج"><figcaption style="color: #ff1e00;">برياني دجاج</figcaption></figure></article>
+                <!-- الكارت الرابع --><article class="item"><div class="main-content"><div class="content"><h2>مطعم مجابيس </h2><a href="https://www.orderfast.com/en/machaabees" target="_blank" class="order-link"><button class="order-now">اطلب الآن</button></a></div></div><figure class="image"><img src="images/maqluba.jpg" alt="مقلوبة باللحم"><figcaption style="color: #ff1e00;">مقلوبة باللحم</figcaption></figure></article>
+                <!-- الكارت الخامس --><article class="item"><div class="main-content"><div class="content"><h2>مطعم مجابيس </h2><a href="https://www.orderfast.com/en/machaabees" target="_blank" class="order-link"><button class="order-now">اطلب الآن</button></a></div></div><figure class="image"><img src="images/mandi-dajaj.jpg" alt="مندي دجاج"><figcaption style="color: #ff1e00;">مندي دجاج</figcaption></figure></article>
+                <!-- الكارت السادس --><article class="item"><div class="main-content"><div class="content"><h2>مطعم مجابيس </h2><a href="https://www.orderfast.com/en/machaabees" target="_blank" class="order-link"><button class="order-now">اطلب الآن</button></a></div></div><figure class="image"><img src="images/fried-eggs.jpg" alt="إفطار شرقي"><figcaption style="color: #ff1e00;">إفطار شرقي / خليجي متكامل</figcaption></figure></article>
+                <!-- الكارت السابع --><article class="item"><div class="main-content"><div class="content"><h2>مطعم مجابيس </h2><a href="https://www.orderfast.com/en/machaabees" target="_blank" class="order-link"><button class="order-now">اطلب الآن</button></a></div></div><figure class="image"><img src="images/ouzi-parcels.jpg" alt="صرر الأوزي باللحم"><figcaption style="color: #ff1e00;">صرر الأوزي باللحم</figcaption></figure></article>
+                <!-- الكارت الثامن --><article class="item"><div class="main-content"><div class="content"><h2>مطعم مجابيس </h2><a href="https://www.orderfast.com/en/machaabees" target="_blank" class="order-link"><button class="order-now">اطلب الآن</button></a></div></div><figure class="image"><img src="images/majboos-options.jpg" alt="مجبوس لحم ودجاج"><figcaption style="color: #ff1e00;">مجبوس لحم ودجاج</figcaption></figure></article>
+                <!-- الكارت التاسع --><article class="item"><div class="main-content"><div class="content"><h2>مطعم مجابيس </h2><a href="https://www.orderfast.com/en/machaabees" target="_blank" class="order-link"><button class="order-now">اطلب الآن</button></a></div></div><figure class="image"><img src="images/kabsa-vegetables.jpg" alt="كبسة دجاج بالخضار"><figcaption style="color: #ff1e00;">كبسة دجاج بالخضار</figcaption></figure></article>
+                <!-- الكارت العاشر --><article class="item"><div class="main-content"><div class="content"><h2>مطعم مجابيس </h2><a href="https://www.orderfast.com/en/machaabees" target="_blank" class="order-link"><button class="order-now">اطلب الآن</button></a></div></div><figure class="image"><img src="images/majboos-lahm-poster.jpg" alt="مجبوس لحم"><figcaption style="color: #ff1e00;">مجبوس لحم</figcaption></figure></article>
+            </div>
+            <div class="arrows">
+                <button id="prev">&lt;</button>
+                <button id="next">&gt;</button>
+            </div>
+        </section>
+  
+        <!-- Section 2: Menu Section -->
+        <section id="menu" class="menu-section section-container">
+            <div class="giant-text-bg">القائمة</div>
+            <h2 class="section-title">قوائمنا الشهية</h2>
+            <div class="menu-grid">
+                <div class="menu-card" data-url="https://heyzine.com/flip-book/11249e7f8a.html#page/1" style="translate: none; rotate: none; scale: none; transform: translate(0px, 62.4772px) rotateY(0); opacity: 1;">
+                    <div class="card-img-container">
+                        <img src="Untitled-1.jpg" alt="صورة مجابيس">
+                    </div>
+                    <div class="card-content"><h3>منيو مجابيس</h3></div>
+                </div>
+                <div class="menu-card" data-url="https://heyzine.com/flip-book/11249e7f8a.html#page/12" style="translate: none; rotate: none; scale: none; transform: translate(0px, 62.4772px) rotateY(0); opacity: 1;">
+                    <div class="card-img-container">
+                        <img src="photo_2025-08-16_13-06-10.jpg" alt="صورة تاميس">
+                    </div>
+                    <div class="card-content"><h3>منيو تاميس</h3></div>
+                </div>
+                <div class="menu-card" data-url="https://heyzine.com/flip-book/11249e7f8a.html#page/16" style="translate: none; rotate: none; scale: none; transform: translate(0px, 62.4772px) rotateY(0); opacity: 1;">
+                    <div class="card-img-container">
+                        <img src="photo_2025-08-16_13-04-38.jpg" alt="صورة شباتي">
+                    </div>
+                    <div class="card-content"><h3>منيو شباتي</h3></div>
+                </div>
+            </div>
+        </section>
+        <!-- Section 2: Menu Section -->
+<!-- Section 2: Menu Section -->
+
+        <!-- Section 3: Services Section -->
+        <section id="services" class="services-section section-container">
+            <div class="giant-text-bg">خدماتنا</div>
+            <h2 class="section-title">كيف يمكننا خدمتك؟</h2>
+            <div class="services-grid">
+                <a href="https://www.orderfast.com/en/machaabees" class="service-card primary"style="opacity: 1; translate: none; rotate: none; scale: none; transform: translate(0px);">
+                    <i class="fa-solid fa-motorcycle"></i>
+                    <h3>اطلب الآن</h3>
+                    <p>وجبتك المفضلة تصلك ساخنة وطازجة إلى باب منزلك بسرعة وسهولة.</p>
+                </a>
+                <a href="whatsapp://send?phone=201030063366" class="service-card" style="opacity: 1; translate: none; rotate: none; scale: none; transform: translate(0px);">
+                    <i class="fa-brands fa-whatsapp"></i>
+                    <h3>واتساب الدعم</h3>
+                    <p>لديك سؤال أو استفسار؟ فريق الدعم جاهز لمساعدتك مباشرة عبر واتساب.</p>
+                </a>
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLScKGcHBu6B5TMjFoDaUB7A3kA2nQp0gtxrKDjBLxH0d5VqTPA/viewform?usp=sf_link" class="service-card" style="opacity: 1; translate: none; rotate: none; scale: none; transform: translate(0px);">
+                    <i class="fa-solid fa-star"></i>
+                    <h3>رأيك يهمنا</h3>
+                    <p>شاركنا تجربتك وساعدنا على التطور. نقدر رأيك كثيرًا ونسعى دائمًا للأفضل.</p>
+                </a>
+                <a href="https://ahmadshehata-svg.github.io/Our_Branches/" class="service-card " style="opacity: 1; translate: none; rotate: none; scale: none; transform: translate(0px);">
+                    <i class="fa-solid fa-map-location-dot"></i>
+                    <h3>فروعنا</h3>
+                    <p>اكتشف مواقع فروعنا الأقرب إليك واستمتع بتجربة طعام لا تُنسى.</p>
+                </a>
+            </div>
+        </section>
+
+        <!-- Section 4: About Section -->
+        <section id="about" class="about-section section-container">
+            <div class="giant-text-bg">حكايتنا</div>
+            <div class="two-column-layout">
+                <div class="text-content">
+                    <!-- ===== هنا التعديل الثالث: تم حذف الستايل المباشر الخاطئ ===== -->
+<h2 class="section-head" style="text-align: right; margin-bottom: 40px; font-family: 'Aref Ruqaa', serif;">قصتنا</h2>                    <p class="lead-paragraph">في عالم تتنوّع فيه المطابخ والنكهات، يظل للمذاق الخليجي سحره الخاص. ومن هنا كانت انطلاقة <strong>مجابيس</strong>، الاسم الذي بات مرادفاً للأصالة والفخامة في عالم المأكولات الكويتية والخليجية.</p>
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-content">
+                                <h4>2018 - الانطلاقة في الإسكندرية</h4>
+                                <p>بدأت رحلتنا لنكون من أوائل من يقدّم تجربة المائدة الكويتية الأصيلة في مصر.</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-content">
+                                <h4>2020 - التوسع في الدقي</h4>
+                                <p>وصلنا إلى قلب العاصمة ليتذوق روّادها نكهاتنا الفريدة.</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-content">
+                                <h4>2022 - فرع الشيخ زايد</h4>
+                                <p>واصلنا انتشارنا حاملين معنا رسالة الطهي الراقي والجودة الفائقة.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <p>في مجابيس، نولي كل تفصيلة عناية فائقة، من اختيار أجود المكونات إلى طرق الطهي التقليدية. كل طبق نقدّمه هو حكاية من التراث الخليجي، تعكس دفء الضيافة وفخامتها.</p>
+                </div>
+                <div class="image-content">
+                    <img src="photo_2025-08-16_13-21-46.jpg" alt="صورة داخل المطعم">
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Menu Loader Modal -->
+    <div id="menu-loader-modal" class="menu-loader">
+        <div class="loader-content">
+            <h2>MENU</h2>
+        </div>
+    </div>
+
+    <!-- GSAP Animation Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/ScrollTrigger.min.js"></script>
+
+    <!-- Combined JavaScript -->
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+
+        // ... كود الكاروسيل (يبقى كما هو) ...
+        const nextButton = document.getElementById('next');
+        const prevButton = document.getElementById('prev');
+        const carousel = document.querySelector('.carousel');
+        const items = document.querySelectorAll('.carousel .item');
+        if (nextButton && prevButton && carousel && items.length > 0) {
+            const countItem = items.length;
+            let active = 1; let other_1 = 0; let other_2 = 2;
+            nextButton.onclick = () => {
+                carousel.classList.remove('prev'); carousel.classList.add('next');
+                active = active + 1 >= countItem ? 0 : active + 1;
+                other_1 = active - 1 < 0 ? countItem - 1 : active - 1;
+                other_2 = active + 1 >= countItem ? 0 : active + 1;
+                changeSlider();
+            }
+            prevButton.onclick = () => {
+                carousel.classList.remove('next'); carousel.classList.add('prev');
+                active = active - 1 < 0 ? countItem - 1 : active - 1;
+                other_1 = active + 1 >= countItem ? 0 : active + 1;
+                other_2 = other_1 + 1 >= countItem ? 0 : other_1 + 1;
+                changeSlider();
+            }
+            const changeSlider = () => {
+                let itemOldActive = document.querySelector('.carousel .item.active'); if (itemOldActive) itemOldActive.classList.remove('active');
+                let itemOldOther_1 = document.querySelector('.carousel .item.other_1'); if (itemOldOther_1) itemOldOther_1.classList.remove('other_1');
+                let itemOldOther_2 = document.querySelector('.carousel .item.other_2'); if (itemOldOther_2) itemOldOther_2.classList.remove('other_2');
+                items.forEach(e => {
+                    const img = e.querySelector('.image img'); const figcaption = e.querySelector('.image figcaption');
+                    if (img) img.style.animation = 'none'; if (figcaption) figcaption.style.animation = 'none';
+                    void e.offsetWidth; 
+                    if (img) img.style.animation = ''; if (figcaption) figcaption.style.animation = '';
+                });
+                if (items[active]) items[active].classList.add('active'); if (items[other_1]) items[other_1].classList.add('other_1'); if (items[other_2]) items[other_2].classList.add('other_2');
+                clearInterval(autoPlay); autoPlay = setInterval(() => { nextButton.click(); }, 5000);
+            }
+            let autoPlay = setInterval(() => { nextButton.click(); }, 5000);
+            changeSlider();
+        }
+
+        // ===============================================
+        // ===== GSAP Animations (تم تحسينها وتعديلها) =====
+        // ===============================================
+        gsap.registerPlugin(ScrollTrigger);
+
+        const animateFadeInUp = (selector, y = 60, duration = 1.2, stagger = 0.2) => {
+            gsap.from(selector, {
+                scrollTrigger: { trigger: selector, start: 'top 85%', toggleActions: 'play none none reverse' },
+                duration: duration, opacity: 0, y: y, stagger: stagger, ease: 'power3.out'
+            });
+        };
+
+        animateFadeInUp('.section-title');
+        animateFadeInUp('.service-card');
+
+        gsap.from('.menu-card', {
+            scrollTrigger: { trigger: '.menu-grid', start: 'top 80%', toggleActions: 'play none none reverse' },
+            duration: 1, opacity: 0, y: 80, rotationY: -20, stagger: 0.2, ease: 'power3.out'
+        });
+
+        animateFadeInUp('.about-section .text-content > *', 50, 1, 0.15);
+        animateFadeInUp('.about-section .image-content', 50, 1.2, 0);
+
+        document.querySelectorAll('.giant-text-bg').forEach(textEl => {
+            const isAboutSection = textEl.parentElement.id === 'about';
+            const xPercentValue = isAboutSection ? 50 : -50;
+            const rotationValue = isAboutSection ? 10 : -10;
+
+            gsap.to(textEl, {
+                scrollTrigger: {
+                    trigger: textEl.parentElement,
+                    start: 'top bottom',
+                    end: 'bottom top',
+                    scrub: 1.5
+                },
+                xPercent: xPercentValue,
+                yPercent: -20,
+                rotation: rotationValue,
+                ease: 'none'
+            });
+        });
+
+        const menuCards = document.querySelectorAll('.menu-card');
+        const modal = document.getElementById('menu-loader-modal');
+        menuCards.forEach(card => {
+            card.addEventListener('click', () => {
+                const url = card.dataset.url;
+                if (url && modal) {
+                    modal.classList.add('visible');
+                    setTimeout(() => { window.location.href = url; }, 1500); 
+                }
+            });
+        });
+
+        const navToggle = document.querySelector('.nav-toggle');
+        const navUl = document.querySelector('.main-nav ul');
+        if(navToggle && navUl){
+            navToggle.addEventListener('click', function(){
+                navUl.classList.toggle('show');
+            });
+        }
+    });
+    </script>
+</body>
+</html>
